@@ -7,7 +7,8 @@ import 'package:geolocation/screens/home_screen.dart';
 import 'package:geolocation/screens/login_screen.dart';
 import 'package:geolocation/screens/signup_screen.dart';
 import 'package:provider/provider.dart';
-
+import './providers/userProvider.dart';
+import './screens/userDetailsScreen.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -38,9 +39,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
   
-  return ChangeNotifierProvider(
-      create: (context) => UserData(),
-      child: MaterialApp(
+  return  MultiProvider(providers: 
+  [
+    ChangeNotifierProvider(
+      create: (context) => UserData(),),
+    ChangeNotifierProvider(
+      create:(ctx)=>UserProvider(),),
+  ],
+   child: MaterialApp(
         title: 'Geolocation',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -50,13 +56,17 @@ class MyApp extends StatelessWidget {
         ),
         home: _getScreenId(),
         routes: {
+          UserDetailsScreen.routeName:(ctx)=>UserDetailsScreen(),
           LoginScreen.id: (context) => LoginScreen(),
           SignupScreen.id: (context) => SignupScreen(),
           HomeScreen.id: (context) => HomeScreen(),
           '/email':(context) => EmailScreen(),
-          AdminScreen.id:(context) => AdminScreen(),
+          AdminScreen.routeName:(context) => AdminScreen(),
         },
-      ),
-    );
+    ),
+  
+  );
+  
+     
   }
 }

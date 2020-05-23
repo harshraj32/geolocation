@@ -10,9 +10,10 @@ import 'dart:async';
 import 'package:provider/provider.dart';
 
 
-
-
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../models/user_model.dart';
+import '../providers/userProvider.dart';
 // import 'ProfileScreen.dart';
 
 
@@ -52,11 +53,10 @@ Future<FirebaseUser> _signIn(BuildContext context) async {
      'email':userDetails.email,   
      'photoUrl':userDetails.photoUrl,
      'LastSeen': DateTime.now(),
-     
-
    }
    );
-   print("new user");
+  // Provider.of<UserProvider>(context).additem(userDetails); donnot remove this
+  print("new user");
 
  Navigator.pushNamed(context, HomeScreen.id) ;
     
@@ -68,8 +68,6 @@ List<ProviderDetails> providerData = new List<ProviderDetails>();
     providerData.add(providerInfo);
      Provider.of<UserData>(context,listen: false).currentUserId = userDetails.uid;
  
-//  Navigator.pop(context);
-//  Navigator.pushNamed(context, HomeScreen.id) ;
  Navigator.of(context)
     .pushNamedAndRemoveUntil(HomeScreen.id, (Route<dynamic> route) => false);
     

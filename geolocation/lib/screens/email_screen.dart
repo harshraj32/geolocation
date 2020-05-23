@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocation/screens/admin_screen.dart';
 
-
 class EmailScreen extends StatefulWidget {
   @override
   _EmailScreenState createState() => _EmailScreenState();
@@ -19,7 +18,6 @@ class _EmailScreenState extends State<EmailScreen> {
   String _password;
   final _emailIdController = TextEditingController(text: '');
   final _passwordController = TextEditingController(text: '');
-
 
   @override
   Widget build(BuildContext context) {
@@ -124,8 +122,9 @@ class _EmailScreenState extends State<EmailScreen> {
                               signIn(_emailId, _password).then((user) {
                                 if (user != null) {
                                   print('Logged in successfully.');
-                                 Navigator.of(context)
-    .pushNamedAndRemoveUntil(AdminScreen.id, (Route<dynamic> route) => false);
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                      AdminScreen.routeName,
+                                      (Route<dynamic> route) => false);
                                   setState(() {
                                     successMessage =
                                         'Logged in successfully.\nYou can now navigate to Home Page.';
@@ -137,8 +136,6 @@ class _EmailScreenState extends State<EmailScreen> {
                             }
                           },
                         ),
-                       
-                           
                       ],
                     ),
                   ),
@@ -189,7 +186,7 @@ class _EmailScreenState extends State<EmailScreen> {
     );
   }
 
-   Future<FirebaseUser> signIn(String email, String password) async {
+  Future<FirebaseUser> signIn(String email, String password) async {
     try {
       AuthResult authResult = await auth.signInWithEmailAndPassword(
           email: email, password: password);
